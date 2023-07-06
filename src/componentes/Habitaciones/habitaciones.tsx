@@ -64,7 +64,7 @@ const HabitacionesInfoComponent: React.FC = () => {
 		let contadorHabitaciones: number = 0;
 		const generarHabitaciones = (): void => {
 			const nuevasHabitaciones: Habitacion[] = [];
-			for (let i = 1; i <= 30; i++) {
+			for (let i = 1; i <= 50; i++) {
 				contadorHabitaciones++;
 
 				nuevasHabitaciones.push({
