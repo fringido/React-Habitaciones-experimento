@@ -179,7 +179,7 @@ const HabitacionesInfoComponent: React.FC = () => {
 		if(habitacionesbitacionesArray.length == 4){
 			if(calcularPorcentajeHabitaciones(habitacionesbitacionesArray[3].totalHabitaciones) < 18 ) {
 				if(indice === 0 || indice === 1 || indice === 2){
-					return `${porcentaje+1}%`
+					return `${porcentaje}%`
 				}
 				return "66%"
 			}
@@ -192,11 +192,11 @@ const HabitacionesInfoComponent: React.FC = () => {
 		if (calcularPorcentajeHabitaciones(habitacionesbitacionesArray[0].totalHabitaciones) >= 50){
 			return `${(porcentaje-1)*2}%`
 		}
-		return `${porcentaje-4+(indice)}%`
+		return `${porcentaje-3+(indice)}%`
 		}
 
 		if(habitacionesbitacionesArray.length === 2){
-				return `${porcentaje-3}%`
+				return `${porcentaje-4}%`
 		}	
 
 		if(indice === 0){
@@ -208,7 +208,7 @@ const HabitacionesInfoComponent: React.FC = () => {
 			}
 			if(porcentaje >= 40){
 
-				return `${porcentaje-3}%`
+				return `${porcentaje-2}%`
 			}
 		}
 	return `${porcentaje-2}%`
@@ -230,14 +230,14 @@ const HabitacionesInfoComponent: React.FC = () => {
 								<div className="infoTipoHabitacion">
 								<h2>
 									{habitacionesArray.tipo}
-									{calcularPorcentajeHabitaciones(habitacionesArray.totalHabitaciones) }
 								</h2>
 								<div className="boton-estado">
 									<i className="far fa-check-circle " style={{color: "#37c556"}}></i>
 									{habitacionesArray.habitacion.filter((habitacion) => habitacion.estado === "Libre").length}
 									<i className="fas fa-wrench" style={{color: "#ffa500"}}></i>
 									{habitacionesArray.habitacion.filter((habitacion) => habitacion.estado === "Manten...").length}
-									
+									<i className="fas fa-exclamation-triangle" style={{color: "#c70039"}}></i>
+									{habitacionesArray.habitacion.filter((habitacion) => habitacion.estado === "Sucia").length}
 								</div>
 								</div>
 								<div className="room-grid">
