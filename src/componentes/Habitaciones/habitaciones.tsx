@@ -25,14 +25,13 @@ const HabitacionesInfoComponent: React.FC = () => {
 	];
 
 	// Generar un número aleatorio entre 4 y 6 (incluyendo ambos límites)
-	const numTiposHabitacion = Math.floor(Math.random() * (3 - 2 + 1)) + 2;
+	const numTiposHabitacion = Math.floor(Math.random() * (4 - 2 + 1)) + 2;
 
 	const [
 		habitacionesbitacionesArray,
 		setHabitacionesbitacionesArray,
 	] = useState<HabitacionesArray[]>([]);
 
-	const [totalColumnas , setTotalColumnas] = useState<string>('')
 
 	useEffect(() => {
 		const getRandomEstado = (): string => {
@@ -65,7 +64,7 @@ const HabitacionesInfoComponent: React.FC = () => {
 		let contadorHabitaciones: number = 0;
 		const generarHabitaciones = (): void => {
 			const nuevasHabitaciones: Habitacion[] = [];
-			for (let i = 1; i <= 50; i++) {
+			for (let i = 1; i <= 30; i++) {
 				contadorHabitaciones++;
 
 				nuevasHabitaciones.push({
@@ -176,40 +175,45 @@ const HabitacionesInfoComponent: React.FC = () => {
 
 
 	const getWith = (total:number, indice:number): string => {
+		const porcentaje = calcularPorcentajeHabitaciones(total)
+		if(habitacionesbitacionesArray.length == 4){
+			if(calcularPorcentajeHabitaciones(habitacionesbitacionesArray[3].totalHabitaciones) < 18 ) {
+				if(indice === 0 || indice === 1 || indice === 2){
+					return `${porcentaje+1}%`
+				}
+				return "66%"
+			}
+		}
+
+		if(habitacionesbitacionesArray.length == 3){
+		if(porcentaje >= 60 && indice === 0){
+			return "100%"
+		}
+		if (calcularPorcentajeHabitaciones(habitacionesbitacionesArray[0].totalHabitaciones) >= 50){
+			return `${(porcentaje-1)*2}%`
+		}
+		return `${porcentaje-4+(indice)}%`
+		}
+
+		if(habitacionesbitacionesArray.length === 2){
+				return `${porcentaje-3}%`
+		}	
+
 		if(indice === 0){
-			if(calcularPorcentajeHabitaciones(total) > 48){
-
+			if(habitacionesbitacionesArray.length == 1){
 				return "100%"
 			}
-			return `30%`
-		}
-		if(indice == 1){
-			if(calcularPorcentajeHabitaciones((habitacionesbitacionesArray[0].totalHabitaciones)) < 48){
-				return "30%"
-			}
-
-			
-			if(habitacionesbitacionesArray.length == 2){
+			if(porcentaje > 50){
 				return "100%"
 			}
-			if(calcularPorcentajeHabitaciones(total) > 23 ){
-				return "47%"
-			}
-			return "30%"
+			if(porcentaje >= 40){
 
+				return `${porcentaje-3}%`
+			}
 		}
-		return `30%`
+	return `${porcentaje-2}%`
 	}
 
-	// const getheith = (total:number , indice:number): string => {
-	// 	if(indice === 0){
-	// 		if(calcularPorcentajeHabitaciones(total) > 46){
-	// 			return "80vh"
-	// 		}
-	// 	}
-	
-	// 	return `auto`
-	// }
 
 
 	return (
@@ -226,6 +230,7 @@ const HabitacionesInfoComponent: React.FC = () => {
 								<div className="infoTipoHabitacion">
 								<h2>
 									{habitacionesArray.tipo}
+									{calcularPorcentajeHabitaciones(habitacionesArray.totalHabitaciones) }
 								</h2>
 								<div className="boton-estado">
 									<i className="far fa-check-circle " style={{color: "#37c556"}}></i>

@@ -7,16 +7,6 @@
   flex-wrap : wrap;
 }
 
-.my-masonry-grid_column {
-  padding-left   : 20px;
-  /* gutter size */
-  background-clip: padding-box;
-}
-
-.my-masonry-grid_column>.room-group {
-  /* change div to reference your elements you put in <Masonry> */
-  margin-bottom: 20px;
-}
 
 .boton-estado {
   border-radius: 9px;
@@ -38,21 +28,13 @@
   box-shadow    : 4px 2px 3px #f0f0f0, -6px -6px 1px #fafafa;
 }
 
-.my-masonry-grid {
-  display    : -webkit-box;
-  /* Not needed if autoprefixing */
-  display    : -ms-flexbox;
-  /* Not needed if autoprefixing */
-  display    : flex;
-  margin-left: -20px;
-  /* gutter size offset */
-  width      : 100%;
-}
 
 .room-grid {
   display              : grid;
   grid-template-columns: repeat(auto-fill, minmax(109px, 1fr));
   gap                  : 5px;
+  grid-template-rows: unset;
+  overflow: auto;
 }
 
 .infoTipoHabitacion {
