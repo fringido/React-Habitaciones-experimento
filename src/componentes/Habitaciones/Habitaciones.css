@@ -1,0 +1,185 @@
+.room-groups {
+  width     : 100%;
+  max-height: 90vh;
+  gap       : 10px;
+  overflow  : hidden;
+  display   : flex;
+  flex-wrap : wrap;
+}
+
+.my-masonry-grid_column {
+  padding-left   : 20px;
+  /* gutter size */
+  background-clip: padding-box;
+}
+
+.my-masonry-grid_column>.room-group {
+  /* change div to reference your elements you put in <Masonry> */
+  margin-bottom: 20px;
+}
+
+.boton-estado {
+  border-radius: 9px;
+  background   : linear-gradient(145deg, #cacaca, #f0f0f0);
+  box-shadow   : 2px 2px 3px #d5d5d5, -2px -2px 4px #ebebeb;
+  padding      : 4px;
+  margin       : 6px;
+}
+
+.room-group {
+  /* margin-bottom: 15px; */
+  /* border-radius: 5px; */
+  padding       : 10px;
+  flex-direction: column;
+  gap           : 10px;
+  max-height    : 80vh;
+  border-radius : 10px;
+  background    : #F7F7F7;
+  box-shadow    : 4px 2px 3px #f0f0f0, -6px -6px 1px #fafafa;
+}
+
+.my-masonry-grid {
+  display    : -webkit-box;
+  /* Not needed if autoprefixing */
+  display    : -ms-flexbox;
+  /* Not needed if autoprefixing */
+  display    : flex;
+  margin-left: -20px;
+  /* gutter size offset */
+  width      : 100%;
+}
+
+.room-grid {
+  display              : grid;
+  grid-template-columns: repeat(auto-fill, minmax(109px, 1fr));
+  gap                  : 5px;
+}
+
+.infoTipoHabitacion {
+  display        : flex;
+  flex-direction : row;
+  align-items    : center;
+  justify-content: space-between;
+}
+
+.room {
+  display         : flex;
+  align-items     : center;
+  padding         : 6px;
+  border-radius   : 12px;
+  text-align      : center;
+  /* border-radius: 20px; */
+  background      : #f5f5f5;
+  flex-direction  : column;
+  box-shadow      : 3px 2px 2px #d3d1d1, -1px -1px 1px #ffffff;
+}
+
+x i {
+  font-size: 1.2rem;
+}
+
+.status-icon {
+  width          : 100%;
+  display        : flex;
+  align-items    : center;
+  gap            : 5px;
+  justify-content: space-between;
+  flex-direction : column;
+}
+
+
+.room-number {
+  font-weight: bold;
+  font-size  : 1.3rem;
+}
+
+p {
+  margin: 0;
+}
+
+.icon-status_container {
+  display        : flex;
+  flex-direction : column;
+  align-items    : center;
+  gap            : 5px;
+  justify-content: space-between;
+}
+
+.room-status {
+  margin-bottom: 5px;
+}
+
+.room-time {
+  font-weight: bold;
+}
+
+.time-remaining {
+  animation: blink-animation 1s linear infinite;
+}
+
+@keyframes blink-animation {
+
+  0%,
+  50% {
+    opacity: 1;
+  }
+
+  51%,
+  100% {
+    opacity: 0;
+  }
+}
+
+h1 {
+  font-size    : 24px;
+  font-weight  : bold;
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-size    : 18px;
+  font-weight  : bold;
+  margin-bottom: 10px;
+}
+
+.room-info {
+  display        : flex;
+  flex-direction : row;
+  align-items    : flex-end;
+  width          : 100%;
+  flex-wrap      : nowrap;
+  font-size      : 1rem;
+  justify-content: space-between;
+}
+
+.free {
+  background-color: #37c556;
+  /* Verde oscuro */
+}
+
+.maintenance {
+  background-color: #ffa500;
+  /* Naranja */
+}
+
+.dirty {
+  background-color: #c70039;
+  /* Rojo oscuro */
+}
+
+.occupied {
+  background-color: #0f5dc9;
+  /* Azul oscuro */
+}
+
+.cleaning {
+  background-color: rgb(255, 225, 0);
+  /* Amarillo claro */
+}
+
+.countdown {
+  background-color: #ff0000;
+  /* Rojo */
+  color           : #fff;
+  /* Texto blanco */
+}
