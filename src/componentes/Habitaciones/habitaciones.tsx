@@ -177,9 +177,15 @@ const HabitacionesInfoComponent: React.FC = () => {
 	const getWith = (total:number, indice:number): string => {
 		const porcentaje = calcularPorcentajeHabitaciones(total)
 		if(habitacionesbitacionesArray.length == 4){
-			if(calcularPorcentajeHabitaciones(habitacionesbitacionesArray[3].totalHabitaciones) < 18 ) {
+			if(calcularPorcentajeHabitaciones(habitacionesbitacionesArray[3].totalHabitaciones) < 20 ) {
 				if(indice === 0 || indice === 1 || indice === 2){
-					return `${porcentaje}%`
+					if(porcentaje < 15){
+						return `18%`
+					}
+					if(porcentaje < 25){
+						return `25%`
+					}
+					return `${porcentaje+(1*indice)}%`
 				}
 				return "66%"
 			}
@@ -228,16 +234,34 @@ const HabitacionesInfoComponent: React.FC = () => {
 
 							>
 								<div className="infoTipoHabitacion">
-								<h2>
+								<h2 className="titulo-tipo__habitacion">
 									{habitacionesArray.tipo}
 								</h2>
 								<div className="boton-estado">
-									<i className="far fa-check-circle " style={{color: "#37c556"}}></i>
+									<i className="far fa-check-circle " style={{color: "#37c556"}}>
+									&nbsp;
 									{habitacionesArray.habitacion.filter((habitacion) => habitacion.estado === "Libre").length}
-									<i className="fas fa-wrench" style={{color: "#ffa500"}}></i>
-									{habitacionesArray.habitacion.filter((habitacion) => habitacion.estado === "Manten...").length}
-									<i className="fas fa-exclamation-triangle" style={{color: "#c70039"}}></i>
+									</i>
+									<i className="fas fa-wrench" style={{color: "#ffa500"}}>
+									&nbsp;
 									{habitacionesArray.habitacion.filter((habitacion) => habitacion.estado === "Sucia").length}
+									</i>
+									<i className="fas fa-bed" style={{color: "#c70039"}}>
+									&nbsp;
+									{habitacionesArray.habitacion.filter((habitacion) => habitacion.estado === "Ocupada").length}
+									</i>
+									<i className="fas fa-exclamation-triangle" style={{color: "#5f0303"}}>
+									&nbsp;
+									{habitacionesArray.habitacion.filter((habitacion) => habitacion.estado === "Manten...").length}
+									</i>
+									<i className="fas fa-exclamation-triangle" style={{color: "#c70039"}}>
+									&nbsp;
+									{habitacionesArray.habitacion.filter((habitacion) => habitacion.estado === "Sucia").length}
+									</i>
+									<i className="fas fa-exclamation-triangle" style={{color: "rgb(255, 225, 0)"}}>
+									&nbsp;
+									{habitacionesArray.habitacion.filter((habitacion) => habitacion.estado === "Limpieza").length}
+									</i>
 								</div>
 								</div>
 								<div className="room-grid">
@@ -253,18 +277,18 @@ const HabitacionesInfoComponent: React.FC = () => {
 											} ${getCardColor(habitacion.estado)}`}
 											key={habitacion.numero}
 										>
+											<div className="room-info">
 											<i
-												className={`status-icon ${getIconClass(
+												className={` ${getIconClass(
 													habitacion.estado
 												)}`}
 											/>
-											<div className="room-info">
 												<p className="room-number">{habitacion.numero}</p>{" "}
-												<div className="icon-status_container">
-													<p className="room-status">{habitacion.estado}</p>
-												</div>
 											</div>
 											<div className="status-icon">
+													<p className="room-status">{habitacion.estado}</p>
+												<div className="icon-status_container">
+												</div>
 												{habitacion.tiempoRestante && (
 													<div
 														className={`icon-time ${
