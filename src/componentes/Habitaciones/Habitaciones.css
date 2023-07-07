@@ -1,16 +1,16 @@
 .boton-estado {
-  width          : fit-content;
-  border-radius  : 9px;
-  background     : linear-gradient(145deg, #f7f7f7, #f0f0f0);
-  box-shadow     : 2px 2px 3px #d5d5d5, -2px -2px 4px #ebebeb;
-  padding        : 4px 2px;
-  display        : flex;
-  gap            : 4px;
-  margin         : 5px;
-  max-width      : 43%;
-  justify-content: space-around;
-  flex-direction : row;
-  flex-wrap      : wrap;
+  width: fit-content;
+  border-radius: 9px;
+  background: linear-gradient(145deg, #f7f7f7, #f0f0f0);
+  box-shadow: 2px 2px 3px #d5d5d5, -2px -2px 4px #ebebeb;
+  padding: 4px 2px;
+  display: flex;
+  gap: 4px;
+  margin: 5px;
+  max-width: 43%;
+  justify-content: space-between;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .boton-estado i {
@@ -18,8 +18,6 @@
   border-radius: 10px;
   padding      : 3px;
 }
-
-
 
 .room-groups {
   margin    : 0 auto;
@@ -47,12 +45,12 @@
 }
 
 .infoTipoHabitacion {
-  display        : flex;
-  flex-direction : row;
-  margin-bottom  : 10px;
-  flex-wrap      : nowrap;
-  width          : 100%;
-  justify-content: flex-start;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
+  flex-wrap: nowrap;
+  width: 100%;
+  justify-content: space-between;
 }
 
 .room {
@@ -83,7 +81,6 @@
   width: 90%;
 
 }
-
 
 .room-number {
   font-weight: bold;
@@ -179,7 +176,5 @@ h2.titulo-tipo__habitacion {
 
 .countdown {
   background-color: #ff0000;
-  /* Rojo */
   color           : #fff;
-  /* Texto blanco */
 }

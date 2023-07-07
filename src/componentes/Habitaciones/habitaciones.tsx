@@ -10,7 +10,7 @@ interface Habitacion {
 
 interface HabitacionesArray {
 	tipo: string;
-	totalHabitaciones:number;
+	totalHabitaciones: number;
 	habitacion: Habitacion[];
 }
 
@@ -32,10 +32,15 @@ const HabitacionesInfoComponent: React.FC = () => {
 		setHabitacionesbitacionesArray,
 	] = useState<HabitacionesArray[]>([]);
 
-
 	useEffect(() => {
 		const getRandomEstado = (): string => {
-			const estados = ["Libre", "Manten...", "Sucia", "Ocupada", "Limpieza"];
+			const estados = [
+				"Libre",
+				"Mantenimiento",
+				"Sucia",
+				"Ocupada",
+				"Limpieza",
+			];
 			if (contadorHabitaciones > 20) {
 				return estados[0];
 			}
@@ -59,12 +64,10 @@ const HabitacionesInfoComponent: React.FC = () => {
 			return `${padZero(horas)}:${padZero(minutos)}:${padZero(segundos)}`;
 		};
 
-
-
 		let contadorHabitaciones: number = 0;
 		const generarHabitaciones = (): void => {
 			const nuevasHabitaciones: Habitacion[] = [];
-			for (let i = 1; i <= 50; i++) {
+			for (let i = 1; i <= 55; i++) {
 				contadorHabitaciones++;
 
 				nuevasHabitaciones.push({
@@ -77,50 +80,46 @@ const HabitacionesInfoComponent: React.FC = () => {
 
 			getHabitacionesArray(nuevasHabitaciones);
 		};
-		
-		const getHabitacionesArray = (
-			habitaciones: Habitacion[]
-		): void => {
+
+		const getHabitacionesArray = (habitaciones: Habitacion[]): void => {
 			const getHabitacionesArray: HabitacionesArray[] = [];
 			tiposDeHabitacion
 				.filter(
 					(a) =>
-						habitaciones.filter((habitacion) => habitacion.tipo === a).length > 0
+						habitaciones.filter((habitacion) => habitacion.tipo === a).length >
+						0
 				)
 				.forEach((tipo) => {
 					getHabitacionesArray.push({
 						tipo: tipo,
 						totalHabitaciones: habitaciones.filter(
-								(habitacion) => habitacion.tipo === tipo
+							(habitacion) => habitacion.tipo === tipo
 						).length,
 						habitacion: habitaciones.filter(
 							(habitacion) => habitacion.tipo === tipo
 						),
 					});
 				});
-				getHabitacionesArray.sort((a,b) => b.totalHabitaciones - a.totalHabitaciones)
-				
-				columnasTotal(getHabitacionesArray)
-				setHabitacionesbitacionesArray(getHabitacionesArray)
-			};
+			getHabitacionesArray.sort(
+				(a, b) => b.totalHabitaciones - a.totalHabitaciones
+			);
 
-			const columnasTotal = (habitacionesArray: HabitacionesArray[]): void => {
-				
-				setHabitacionesbitacionesArray(habitacionesArray)
-			}
-		
-			
-			generarHabitaciones();
-			
+			columnasTotal(getHabitacionesArray);
+			setHabitacionesbitacionesArray(getHabitacionesArray);
+		};
 
+		const columnasTotal = (habitacionesArray: HabitacionesArray[]): void => {
+			setHabitacionesbitacionesArray(habitacionesArray);
+		};
+
+		generarHabitaciones();
 	}, []);
-
 
 	const getIconClass = (estado: string): string => {
 		switch (estado) {
 			case "Libre":
 				return "far fa-check-circle";
-			case "Manten...":
+			case "Mantenimiento":
 				return "fas fa-wrench";
 			case "Sucia":
 				return "fas fa-exclamation-triangle";
@@ -137,7 +136,7 @@ const HabitacionesInfoComponent: React.FC = () => {
 		switch (estado) {
 			case "Libre":
 				return "free"; /* Verde oscuro */
-			case "Manten...":
+			case "Mantenimiento":
 				return "maintenance"; /* Naranja claro */
 			case "Sucia":
 				return "dirty"; /* Rojo oscuro */
@@ -164,153 +163,182 @@ const HabitacionesInfoComponent: React.FC = () => {
 
 	const calcularPorcentajeHabitaciones = (total: number): number => {
 		let totalTodasHabitaciones: number = 0;
-		
+
 		habitacionesbitacionesArray.forEach((habitacionesArray) => {
-			totalTodasHabitaciones = habitacionesArray.totalHabitaciones + totalTodasHabitaciones;
-		})
+			totalTodasHabitaciones =
+				habitacionesArray.totalHabitaciones + totalTodasHabitaciones;
+		});
 
 		return (total * 100) / totalTodasHabitaciones;
-	
-	}
+	};
 
-
-	const getWith = (total:number, indice:number): string => {
-		const porcentaje = calcularPorcentajeHabitaciones(total)
-		if(habitacionesbitacionesArray.length == 4){
-			if(calcularPorcentajeHabitaciones(habitacionesbitacionesArray[3].totalHabitaciones) < 20 ) {
-				if(indice === 0 || indice === 1 || indice === 2){
-					if(porcentaje < 15){
-						return `18%`
-					}
-					if(porcentaje < 25){
-						return `25%`
-					}
-					return `${porcentaje+(1*indice)}%`
+	const getWith = (total: number, indice: number): string => {
+		const porcentaje = calcularPorcentajeHabitaciones(total);
+		if (habitacionesbitacionesArray.length == 4) {
+			if (
+				calcularPorcentajeHabitaciones(
+					habitacionesbitacionesArray[0].totalHabitaciones
+				) < 40
+			) {
+				if (indice === 0 || indice === 2) {
+					return "52%";
 				}
-				return "66%"
+				if (indice === 1 || indice === 3) {
+					return "45%";
+				}
+			}
+			return `${porcentaje + 1 * indice}%`;
+		}
+
+		if (habitacionesbitacionesArray.length == 3) {
+			if (porcentaje >= 60 && indice === 0) {
+				return "100%";
+			}
+			if (
+				calcularPorcentajeHabitaciones(
+					habitacionesbitacionesArray[0].totalHabitaciones
+				) >= 50
+			) {
+				return `${(porcentaje - 1) * 2}%`;
+			}
+			return `${porcentaje - 3 + indice}%`;
+		}
+
+		if (habitacionesbitacionesArray.length === 2) {
+			return `${porcentaje - 2}%`;
+		}
+
+		if (indice === 0) {
+			if (habitacionesbitacionesArray.length == 1) {
+				return "100%";
+			}
+			if (porcentaje > 50) {
+				return "100%";
+			}
+			if (porcentaje >= 40) {
+				return `${porcentaje - 2}%`;
 			}
 		}
-
-		if(habitacionesbitacionesArray.length == 3){
-		if(porcentaje >= 60 && indice === 0){
-			return "100%"
-		}
-		if (calcularPorcentajeHabitaciones(habitacionesbitacionesArray[0].totalHabitaciones) >= 50){
-			return `${(porcentaje-1)*2}%`
-		}
-		return `${porcentaje-3+(indice)}%`
-		}
-
-		if(habitacionesbitacionesArray.length === 2){
-				return `${porcentaje-4}%`
-		}	
-
-		if(indice === 0){
-			if(habitacionesbitacionesArray.length == 1){
-				return "100%"
-			}
-			if(porcentaje > 50){
-				return "100%"
-			}
-			if(porcentaje >= 40){
-
-				return `${porcentaje-2}%`
-			}
-		}
-	return `${porcentaje-2}%`
-	}
-
-
+		return `${porcentaje - 2}%`;
+	};
 
 	return (
 		<div>
 			<h1>Administración de Habitaciones</h1>
 			<div className="room-groups">
-			
-					{ habitacionesbitacionesArray
-						.map((habitacionesArray , i) => (
-							<div className="room-group" key={habitacionesArray.tipo}
-							style={ {width: getWith(habitacionesArray.totalHabitaciones , i) }}
-
-							>
-								<div className="infoTipoHabitacion">
-								<h2 className="titulo-tipo__habitacion">
-									{habitacionesArray.tipo}
-								</h2>
-								<div className="boton-estado">
-									<i className="far fa-check-circle " style={{color: "#37c556"}}>
+				{habitacionesbitacionesArray.map((habitacionesArray, i) => (
+					<div
+						className="room-group"
+						key={habitacionesArray.tipo}
+						style={{ width: getWith(habitacionesArray.totalHabitaciones, i) }}
+					>
+						<div className="infoTipoHabitacion">
+							<h2 className="titulo-tipo__habitacion">
+								{habitacionesArray.tipo}
+							</h2>
+							<div className="boton-estado">
+								<i
+									className="far fa-check-circle "
+									style={{ color: "#37c556" }}
+								>
 									&nbsp;
-									{habitacionesArray.habitacion.filter((habitacion) => habitacion.estado === "Libre").length}
-									</i>
-									<i className="fas fa-wrench" style={{color: "#ffa500"}}>
+									{
+										habitacionesArray.habitacion.filter(
+											(habitacion) => habitacion.estado === "Libre"
+										).length
+									}
+								</i>
+								<i className="fas fa-wrench" style={{ color: "#ffa500" }}>
 									&nbsp;
-									{habitacionesArray.habitacion.filter((habitacion) => habitacion.estado === "Sucia").length}
-									</i>
-									<i className="fas fa-bed" style={{color: "#c70039"}}>
+									{
+										habitacionesArray.habitacion.filter(
+											(habitacion) => habitacion.estado === "Sucia"
+										).length
+									}
+								</i>
+								<i className="fas fa-bed" style={{ color: "#c70039" }}>
 									&nbsp;
-									{habitacionesArray.habitacion.filter((habitacion) => habitacion.estado === "Ocupada").length}
-									</i>
-									<i className="fas fa-exclamation-triangle" style={{color: "#5f0303"}}>
+									{
+										habitacionesArray.habitacion.filter(
+											(habitacion) => habitacion.estado === "Ocupada"
+										).length
+									}
+								</i>
+								<i
+									className="fas fa-exclamation-triangle"
+									style={{ color: "#5f0303" }}
+								>
 									&nbsp;
-									{habitacionesArray.habitacion.filter((habitacion) => habitacion.estado === "Manten...").length}
-									</i>
-									<i className="fas fa-exclamation-triangle" style={{color: "#c70039"}}>
+									{
+										habitacionesArray.habitacion.filter(
+											(habitacion) => habitacion.estado === "Mantenimiento"
+										).length
+									}
+								</i>
+								<i
+									className="fas fa-exclamation-triangle"
+									style={{ color: "#c70039" }}
+								>
 									&nbsp;
-									{habitacionesArray.habitacion.filter((habitacion) => habitacion.estado === "Sucia").length}
-									</i>
-									<i className="fas fa-exclamation-triangle" style={{color: "rgb(255, 225, 0)"}}>
+									{
+										habitacionesArray.habitacion.filter(
+											(habitacion) => habitacion.estado === "Sucia"
+										).length
+									}
+								</i>
+								<i
+									className="fas fa-exclamation-triangle"
+									style={{ color: "rgb(255, 225, 0)" }}
+								>
 									&nbsp;
-									{habitacionesArray.habitacion.filter((habitacion) => habitacion.estado === "Limpieza").length}
-									</i>
-								</div>
-								</div>
-								<div className="room-grid">
-									{habitacionesArray.habitacion.map((habitacion ) => (
-										<div
-											className={`room ${
-												tiempoRestanteMenor10Minutos(
-													habitacion.tiempoRestante,
-													habitacion.estado
-												)
-													? "countdown"
-													: ""
-											} ${getCardColor(habitacion.estado)}`}
-											key={habitacion.numero}
-										>
-											<div className="room-info">
-											<i
-												className={` ${getIconClass(
-													habitacion.estado
-												)}`}
-											/>
-												<p className="room-number">{habitacion.numero}</p>{" "}
-											</div>
-											<div className="status-icon">
-													<p className="room-status">{habitacion.estado}</p>
-												<div className="icon-status_container">
-												</div>
-												{habitacion.tiempoRestante && (
-													<div
-														className={`icon-time ${
-															tiempoRestanteMenor10Minutos(
-																habitacion.tiempoRestante,
-																habitacion.estado
-															)
-																? "countdown"
-																: ""
-														}`}
-													>
-														<p className="room-time">
-															{habitacion.tiempoRestante}
-														</p>
-													</div>
-												)}
-											</div>
-										</div>
-									))}
-								</div>
+									{
+										habitacionesArray.habitacion.filter(
+											(habitacion) => habitacion.estado === "Limpieza"
+										).length
+									}
+								</i>
 							</div>
-						))}
+						</div>
+						<div className="room-grid">
+							{habitacionesArray.habitacion.map((habitacion) => (
+								<div
+									className={`room ${
+										tiempoRestanteMenor10Minutos(
+											habitacion.tiempoRestante,
+											habitacion.estado
+										)
+											? "countdown"
+											: ""
+									} ${getCardColor(habitacion.estado)}`}
+									key={habitacion.numero}
+								>
+									<div className="room-info">
+										<i className={` ${getIconClass(habitacion.estado)}`} />
+										<p className="room-number">{habitacion.numero}</p>{" "}
+									</div>
+									<div className="status-icon">
+										<p className="room-status">{habitacion.estado}</p>
+										<div className="icon-status_container"></div>
+										{habitacion.tiempoRestante && (
+											<div
+												className={`icon-time ${
+													tiempoRestanteMenor10Minutos(
+														habitacion.tiempoRestante,
+														habitacion.estado
+													)
+														? "countdown"
+														: ""
+												}`}
+											>
+												<p className="room-time">{habitacion.tiempoRestante}</p>
+											</div>
+										)}
+									</div>
+								</div>
+							))}
+						</div>
+					</div>
+				))}
 			</div>
 		</div>
 	);
