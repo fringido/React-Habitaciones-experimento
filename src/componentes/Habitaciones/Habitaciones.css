@@ -101,6 +101,7 @@ p {
 
 .room-status {
   margin-bottom  : 5px;
+  clip-path: content-box;
   /* margin-right: 2px; */
 }
 
